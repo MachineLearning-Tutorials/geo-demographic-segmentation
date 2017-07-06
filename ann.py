@@ -143,12 +143,3 @@ grid_search = grid_search.fit(X_train, y_train)
 # find out best parameters and accuracies
 best_parameters = grid_search.best_params_
 best_accuracy = grid_search.best_score_
-
-
-
-
-
-
-
-
-
