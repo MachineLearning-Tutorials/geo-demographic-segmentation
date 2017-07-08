@@ -13,12 +13,11 @@ I built the model using the [Keras](https://keras.io/) library, which is built o
 - numpy
 - pandas
 - scikit-learn
-- matplotlib
 
 Install dependencies using [pip](https://pip.pypa.io/en/stable/).
 
 ## Dataset
-I used a [simulated dataset](https://www.superdatascience.com/deep-learning/) for this project with 10,000 observations (customers) and 12 attributes.
+I used a [simulated dataset](https://www.superdatascience.com/deep-learning/) (inputs/churn.csv) with 10,000 observations (customers) and 13 attributes.
 
 | Variable  | Definition |
 | ------------- | ------------- |
@@ -36,3 +35,5 @@ I used a [simulated dataset](https://www.superdatascience.com/deep-learning/) fo
 | EstimatedSalary  | Customer's estimated salary  |
 | Exited  | Did the customer leave the bank? |
 
+## Usage
+Run `python script.py` in terminal to see the network in training.
