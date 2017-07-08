@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # import dataset
-dataset = pd.read_csv('churn.csv')
+dataset = pd.read_csv('input/churn.csv')
 X = dataset.iloc[:, 3:13].values
 y = dataset.iloc[:, 13].values
 
@@ -25,7 +25,7 @@ onehotencoder = OneHotEncoder(categorical_features=[1])
 X = onehotencoder.fit_transform(X).toarray()
 
 # avoid dummy variable trap (break multicollinearity between independent variables)
-# remove column for first country from X 
+# remove column for first country from X
 X = X[:, 1:]
 
 # split dataset into training set and test set
@@ -64,15 +64,21 @@ classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'
 classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
 # fit neural network to training set
-classifier.fit(x=X_train, y=y_train, batch_size=10, epochs=100)
+classifier.fit(X_train, y_train, batch_size=10, epochs=100)
+print ("Training complete!")
 
 # predict test set results
 y_pred = classifier.predict(X_test)
 y_pred = (y_pred > 0.5)
+print ("Testing complete!")
 
 # create confusion matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
+accuracy = (cm[0, 0] + cm[1, 1])/(cm[0, 0] + cm[1, 1] + cm[0, 1] + cm[1, 0])
+
+# print accuracy
+print ("Model accuracy: {acc}".format(acc=accuracy))
 
 # predict a single new observation
 '''
@@ -88,10 +94,21 @@ Is this customer an Active Member: Yes
 Estimated Salary: $50000
 '''
 
+new_observation_desc = "Geography: France\nCredit Score: 600\nGender: Male\nAge: 40 years old\nTenure: 3 years\nBalance: $60000\nNumber of Products: 2\nDoes this customer have a credit card ? Yes\nIs this customer an Active Member: Yes\nEstimated Salary: $50000"
+
+print ("\n----------------")
+print ("NEW OBSERVATION:")
+print ("----------------")
+print (new_observation_desc)
+
 new_observation = np.array([[0.0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])
 
 # scale new observation
 new_observation = sc_X.transform(new_observation)
 
-new_prediction = classifier.predict(new_observation)
-new_prediction = (new_prediction > 0.5)
+new_prediction_prob = classifier.predict(new_observation)
+new_prediction = (new_prediction_prob > 0.5)
+
+print ("-----------------------------------------------------------------------")
+print ("Probability that new customer will leave the bank: {prob}".format(prob=new_prediction_prob[0][0]))
+print ("-----------------------------------------------------------------------")
