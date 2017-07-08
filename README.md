@@ -17,14 +17,14 @@ I built the model using the [Keras](https://keras.io/) library, which is built o
 Install dependencies using [pip](https://pip.pypa.io/en/stable/).
 
 ## Dataset
-I used a [simulated dataset](https://www.superdatascience.com/deep-learning/) (inputs/churn.csv) with 10,000 observations (customers) and 13 attributes.
+I used a [simulated dataset](https://www.superdatascience.com/deep-learning/) (input/churn.csv) with 10,000 observations (customers) and 13 attributes.
 
 | Variable  | Definition |
 | ------------- | ------------- |
 | CustomerId  | Customer's account ID  |
 | Surname  | Customer's surname  |
 | CreditScore  | Customer's credit score  |
-| Geography  | Country (France/Spain/Germany)  |
+| Geography  | Country (France/Germany/Spain)  |
 | Gender  | Customer's gender (Male/Female)  |
 | Age  | Customer's age  |
 | Tenure  | Number of years customer has been with the bank  |
@@ -37,3 +37,34 @@ I used a [simulated dataset](https://www.superdatascience.com/deep-learning/) (i
 
 ## Usage
 Run `python script.py` in terminal to see the network in training.
+
+### Test Run
+```
+...
+Epoch 98/100
+8000/8000 [==============================] - 2s - loss: 0.3924 - acc: 0.8361     
+Epoch 99/100
+8000/8000 [==============================] - 2s - loss: 0.3931 - acc: 0.8374     
+Epoch 100/100
+8000/8000 [==============================] - 2s - loss: 0.3929 - acc: 0.8367     
+Training complete!
+Testing complete!
+Model accuracy: 0.8455
+
+----------------
+NEW OBSERVATION:
+----------------
+Geography: France
+Credit Score: 600
+Gender: Male
+Age: 40 years old
+Tenure: 3 years
+Balance: $60000
+Number of Products: 2
+Does this customer have a credit card ? Yes
+Is this customer an Active Member: Yes
+Estimated Salary: $50000
+-----------------------------------------------------------------------
+Probability that new customer will leave the bank: 0.058069657534360886
+-----------------------------------------------------------------------
+```
