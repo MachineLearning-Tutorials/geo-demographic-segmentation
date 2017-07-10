@@ -112,28 +112,3 @@ new_prediction = (new_prediction_prob > 0.5)
 print ("-----------------------------------------------------------------------")
 print ("Probability that new customer will leave the bank: {prob}".format(prob=new_prediction_prob[0][0]))
 print ("-----------------------------------------------------------------------")
-
-# evaluation, improvement, and tuning
-# evaluation
-from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.model_selection import cross_val_score
-
-# build classifier
-def build_classifier():
-    classifier = Sequential()
-    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_shape=(11,)))
-    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
-    classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
-    classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    return classifier
-
-# global classifier
-classifier = KerasClassifier(build_fn=build_classifier, batch_size=10, epochs=100)
-accuracies = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10, n_jobs=-1)
-
-# mean accuracy
-mean = accuracies.mean()
-variance = accuracies.std()
-
-print("Mean accuracy: {mean_acc}".format(mean_acc=mean))
-print("Accuracy variance: {var_acc}".format(var_acc=variance))
