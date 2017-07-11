@@ -42,6 +42,7 @@ X_test = sc_X.transform(X_test)
 import keras
 from keras.models import Sequential # used to initialize neural network
 from keras.layers import Dense # used to create layers in artificial neural network
+from keras.layers import Dropout # used for dropout regularization
 
 # initialize neural network
 classifier = Sequential()
@@ -51,9 +52,11 @@ classifier = Sequential()
 
 # input layer and first hidden layer
 classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_shape=(11,)))
+classifier.add(Dropout(rate=0.1))
 
 # second hidden layer
 classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
+classifier.add(Dropout(rate=0.1))
 
 # output layer
 classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
@@ -112,3 +115,63 @@ new_prediction = (new_prediction_prob > 0.5)
 print ("-----------------------------------------------------------------------")
 print ("Probability that new customer will leave the bank: {prob}".format(prob=new_prediction_prob[0][0]))
 print ("-----------------------------------------------------------------------")
+
+
+# evaluation, improvement, and tuning
+# evaluation
+from keras.wrappers.scikit_learn import KerasClassifier
+from sklearn.model_selection import cross_val_score
+
+# build classifier
+def build_classifier():
+    classifier = Sequential()
+    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_shape=(11,)))
+    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
+    classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
+    classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return classifier
+
+# global classifier
+classifier = KerasClassifier(build_fn=build_classifier, batch_size=10, epochs=100)
+accuracies = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10, n_jobs=-1)
+
+# mean accuracy
+mean = accuracies.mean()
+variance = accuracies.std()
+
+print("Mean accuracy: {mean_acc}".format(mean_acc=mean))
+print("Accuracy variance: {var_acc}".format(var_acc=variance))
+
+# tuning
+from keras.wrappers.scikit_learn import KerasClassifier
+from sklearn.model_selection import GridSearchCV
+
+# build classifier
+def build_classifier(optimizer):
+    classifier = Sequential()
+    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_shape=(11,)))
+    classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
+    classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
+    classifier.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+    return classifier
+
+classifier = KerasClassifier(build_fn=build_classifier)
+
+# parameters
+parameters = {'batch_size': [25, 32],
+              'epochs': [100, 500],
+              'optimizer': ['adam', 'rmsprop']}
+
+# grid search
+grid_search = GridSearchCV(estimator=classifier, param_grid=parameters, scoring='accuracy', cv=10)
+
+grid_search = grid_search.fit(X_train, y_train)
+
+# best parameters
+best_parameters = grid_search.best_params_
+
+# best accuracy
+best_accuracy = grid_search.best_score_
+
+print("Best parameters: {best_params}".format(best_params=best_parameters))
+print("Best accuracy: {best_acc}".format(best_acc=best_accuracy))
