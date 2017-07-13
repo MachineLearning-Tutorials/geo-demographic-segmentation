@@ -41,7 +41,7 @@ X_test = sc_X.transform(X_test)
 # build artificial neural network
 import keras
 from keras.models import Sequential # used to initialize neural network
-from keras.layers import Dense # used to create layers in artificial neural network
+from keras.layers import Dense # used to create layers
 from keras.layers import Dropout # used for dropout regularization
 
 # initialize neural network
