@@ -1,9 +1,9 @@
-# data preprocessing
 # import libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# data preprocessing
 # import dataset
 dataset = pd.read_csv('input/churn.csv')
 X = dataset.iloc[:, 3:13].values
