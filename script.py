@@ -24,7 +24,7 @@ X[:, 2] = label_encoder_x_gender.fit_transform(X[:, 2])
 onehotencoder = OneHotEncoder(categorical_features=[1])
 X = onehotencoder.fit_transform(X).toarray()
 
-# avoid dummy variable trap (break multicollinearity between independent variables)
+# avoid dummy variable trap
 # remove column for first country from X
 X = X[:, 1:]
 
