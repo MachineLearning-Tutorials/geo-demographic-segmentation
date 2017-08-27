@@ -23,9 +23,7 @@ X[:, 2] = label_encoder_x_gender.fit_transform(X[:, 2])
 # dummy variables (binary one-hot encoding)
 onehotencoder = OneHotEncoder(categorical_features=[1])
 X = onehotencoder.fit_transform(X).toarray()
-
 # avoid dummy variable trap
-# remove column for first country from X
 X = X[:, 1:]
 
 # split dataset into training set and test set
