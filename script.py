@@ -140,7 +140,7 @@ variance = accuracies.std()
 print("Mean accuracy: {mean_acc}".format(mean_acc=mean))
 print("Accuracy variance: {var_acc}".format(var_acc=variance))
 
-# tuning
+# hyperparameter tuning
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import GridSearchCV
 
