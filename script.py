@@ -3,12 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# data preprocessing
 # import dataset
 dataset = pd.read_csv('input/churn.csv')
 X = dataset.iloc[:, 3:13].values
 y = dataset.iloc[:, 13].values
 
+# data preprocessing
 # encode categorical data
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
