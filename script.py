@@ -104,6 +104,7 @@ print (new_observation_desc)
 
 new_observation = np.array([[0.0, 0, 600, 1, 40, 3, 60000, 2, 1, 1, 50000]])
 
+# preprocessing new observation
 # scale new observation
 new_observation = sc_X.transform(new_observation)
 
