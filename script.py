@@ -172,5 +172,6 @@ best_parameters = grid_search.best_params_
 # best accuracy
 best_accuracy = grid_search.best_score_
 
+# print values
 print("Best parameters: {best_params}".format(best_params=best_parameters))
 print("Best accuracy: {best_acc}".format(best_acc=best_accuracy))
